@@ -1,0 +1,9 @@
+os
+opendatasets==0.1.22
+pandas==2.2.2
+numpy==1.26.4
+tensorflow==2.18.0
+nltk==3.9.1
+matplotlib==3.10.0
+seaborn==0.13.2
+Scikit-learn==1.6.1
