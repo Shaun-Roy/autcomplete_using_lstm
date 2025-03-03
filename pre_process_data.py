@@ -72,4 +72,10 @@ ys = tf.keras.utils.to_categorical(labels, num_classes=total_words)
 X_train_temp, X_val_test, y_train_temp, y_val_test = train_test_split(X, ys, test_size=0.2, random_state=42)
 X_val, X_test, y_val, y_test = train_test_split(X_val_test, y_val_test, test_size=0.5, random_state=42)
 
+# Clear memory by deleting variables no longer needed
+del tokenized_sentences
+del input_sequences
+gc.collect()  # Manually trigger garbage collection to free memory
+
+
 
