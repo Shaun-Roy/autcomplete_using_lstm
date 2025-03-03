@@ -1,14 +1,18 @@
-# Define your model
 model = Sequential()
 model.add(Embedding(total_words, 100))
-model.add(Bidirectional(LSTM(150)))
+model.add(Bidirectional(LSTM(150, dropout=0.3, recurrent_dropout=0.3)))
 model.add(Dense(total_words, activation='softmax'))
 
-adam = Adam(learning_rate=0.01)
+adam = Adam(learning_rate=0.001)
 model.compile(loss='categorical_crossentropy', optimizer=adam, metrics=['accuracy'])
-
+early_stopping = EarlyStopping(
+    monitor='val_loss',         # Metric to monitor (could also be 'val_accuracy')
+    patience=3,                 # Number of epochs with no improvement before stopping
+    verbose=1,                  # Print messages when early stopping is triggered
+    restore_best_weights=True   # Restore the best weights after training stops
+)
 # Train the model
-history = model.fit(X_train_temp, y_train_temp, epochs=30, validation_data=(X_val, y_val), verbose=1)
+history = model.fit(X_train_temp, y_train_temp, epochs=50, validation_data=(X_val, y_val), callbacks=[early_stopping],verbose=1)
 
 
 # Save model architecture as JSON file
