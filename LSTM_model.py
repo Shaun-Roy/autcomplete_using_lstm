@@ -16,17 +16,19 @@ from tensorflow.keras.models import model_from_json
 model_json = model.to_json()
 with open("lstm_model_autocomplete.json", "w") as json_file:
      json_file.write(model_json)
+# Save weights after training
+model.save_weights('model_weights.h5')
 
 
-# Load model architecture from JSON file
-# from tensorflow.keras.models import model_from_json
+# Load the architecture from the JSON file
+with open('lstm_model_autocomplete.json', 'r') as json_file:
+    model_json = json_file.read()
 
-# with open("lstm_model_autocomplete.json", "r") as json_file:
-#     loaded_model_json = json_file.read()
+# Recreate the model from the JSON
+model = model_from_json(model_json)
 
-# # Create model from loaded architecture
-# model = model_from_json(loaded_model_json)
+# Load weights into the model
+model.load_weights('model_weights.h5')
 
-# print("Model architecture loaded successfully from JSON file.")
 
 
